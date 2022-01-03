@@ -1,6 +1,6 @@
 # How to run this project
 
-```shellnpm install``` to install dependencies
+```npm install``` to install dependencies
 
 Try running some of the following tasks:
 

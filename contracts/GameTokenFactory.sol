@@ -62,6 +62,16 @@ contract GameTokenFactory is Ownable {
         collection.collectionAddress.mintSingle(user, tokenURI);
     }
 
+    function changeTokenURI(
+        uint256 collectionId,
+        uint256 tokenId,
+        string memory tokenURI
+    ) public {
+        CollectionDetails memory collection = collectionDetails[collectionId];
+        require(msg.sender == collection.collectionOwner);
+        collection.collectionAddress.changeUri(tokenId, tokenURI);
+    }
+
     function getCollectionListByDeveloper(address owner)
         public
         view

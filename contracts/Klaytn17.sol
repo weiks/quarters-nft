@@ -48,4 +48,11 @@ contract Klaytn17 is
     function transferSingle(address _to, uint256 _tokenId) public {
         safeTransferFrom(msg.sender, _to, _tokenId);
     }
+
+    function changeUri(uint256 tokenId, string memory _newUri)
+        public
+        onlyOwner
+    {
+        _setTokenURI(tokenId, _newUri);
+    }
 }

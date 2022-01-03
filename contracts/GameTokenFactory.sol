@@ -1,7 +1,6 @@
 pragma solidity ^0.5.0;
 import "./utils/Ownable.sol";
 import "./Klaytn17.sol";
-import "./interface/ERC20.sol";
 
 contract GameTokenFactory is Ownable {
     using SafeMath for uint256;
@@ -30,6 +29,11 @@ contract GameTokenFactory is Ownable {
         _;
     }
 
+    /**
+     * @dev Change Developer Status
+     * @param developer address of developer
+     * @param status new status of developer
+     */
     function changeDeveloperStatus(address developer, bool status)
         public
         onlyOwner
@@ -38,6 +42,11 @@ contract GameTokenFactory is Ownable {
         emit StatusChanged(developer, status);
     }
 
+    /**
+     * @dev Creates a new ERC721 collection
+     * @param collectionName Name of Collection
+     * @param colleciontSymbol Symbol of Collection
+     */
     function createCollection(
         string memory collectionName,
         string memory collectionSymbol
@@ -52,6 +61,13 @@ contract GameTokenFactory is Ownable {
         emit CollectionCreated(collection, totalCollection);
     }
 
+    /**
+     * @dev Mint a specific collection
+     * Reverts if non-owner tries to mint
+     * @param collectionId id of collection
+     * @param user address to get minted token
+     * @param tokenURI URI of Art
+     */
     function mintCollection(
         uint256 collectionId,
         address user,
@@ -62,6 +78,13 @@ contract GameTokenFactory is Ownable {
         collection.collectionAddress.mintSingle(user, tokenURI);
     }
 
+    /**
+     * @dev Change URI for Token
+     * Reverts if non-owner tries to change URI
+     * @param collectionId id of collection
+     * @param user address to get minted token
+     * @param tokenURI URI of Art
+     */
     function changeTokenURI(
         uint256 collectionId,
         uint256 tokenId,

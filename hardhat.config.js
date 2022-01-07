@@ -1,21 +1,47 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-ganache");
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
 module.exports = {
-  solidity: "0.5.0",
+  defaultNetwork: "rinkeby",
+  networks: {
+    hardhat: {
+    },
+    rinkeby: {
+      url: "https://rinkeby.infura.io/v3/7cd4731a3be74a6ab7c32fe799ab3177",
+      accounts: ["157fe16dc4a333838397b2adb5bfc1263dacbb9d0fcda48bf9cb362c90824c29"],
+      chainId: 4,
+      live: true,
+      saveDeployments: true,
+      // tags: ["staging"],
+      // gasPrice: 5000000000,
+      // gasMultiplier: 2,
+    },
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/7cd4731a3be74a6ab7c32fe799ab3177`,
+      accounts: ["1f8701c77fa5038ff7b0297d81ba331cc1039788624235f7f3ec75d08c41e5e2"],
+      gasPrice: 120 * 1000000000,
+      // chainId: 1,
+    },
+  },
+  solidity: {
+    version: "0.5.0",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  },
+  paths: {
+    sources: "./contracts",
+    // tests: "./test",s
+    cache: "./cache",
+    artifacts: "./artifacts"
+  },
+  etherscan: {
+    apiKey: "6F2QV99DME1GBEHFT668GJ64M948SMT75N",
+  },
+  mocha: {
+    timeout: 20000
+  }
 };

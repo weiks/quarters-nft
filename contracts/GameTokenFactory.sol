@@ -45,7 +45,7 @@ contract GameTokenFactory is Ownable {
     /**
      * @dev Creates a new ERC721 collection
      * @param collectionName Name of Collection
-     * @param colleciontSymbol Symbol of Collection
+     * @param collectionSymbol Symbol of Collection
      */
     function createCollection(
         string memory collectionName,
@@ -72,9 +72,12 @@ contract GameTokenFactory is Ownable {
         uint256 collectionId,
         address user,
         string memory tokenURI
-    ) public payable {
+    ) public payable onlyDeveloper {
         CollectionDetails memory collection = collectionDetails[collectionId];
-        require(msg.sender == collection.collectionOwner);
+        require(
+            msg.sender == collection.collectionOwner,
+            "Only Owner Can Mint Token"
+        );
         collection.collectionAddress.mintSingle(user, tokenURI);
     }
 
@@ -82,14 +85,14 @@ contract GameTokenFactory is Ownable {
      * @dev Change URI for Token
      * Reverts if non-owner tries to change URI
      * @param collectionId id of collection
-     * @param user address to get minted token
+     * @param tokenId number of token
      * @param tokenURI URI of Art
      */
     function changeTokenURI(
         uint256 collectionId,
         uint256 tokenId,
         string memory tokenURI
-    ) public {
+    ) public onlyDeveloper {
         CollectionDetails memory collection = collectionDetails[collectionId];
         require(msg.sender == collection.collectionOwner);
         collection.collectionAddress.changeUri(tokenId, tokenURI);
